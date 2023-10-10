@@ -26,7 +26,8 @@ namespace FarmaciaPerformanceGo
 
 
             //Validação das entidades 
-            builder.Services.AddTransient<IValidator<Categoria>, CategoriaValidator>(); 
+
+     
             builder.Services.AddTransient<IValidator<Produto>, ProdutoValidator>();
  
 
