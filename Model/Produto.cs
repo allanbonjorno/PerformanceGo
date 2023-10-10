@@ -28,14 +28,12 @@ namespace FarmaciaPerformanceGo.Model
         public string Foto { get; set; } = string.Empty;
 
         [Column(TypeName = "Varchar")]
-        [StringLength(255)]
+        [StringLength(5000)]
         public string Quantidade { get; set; } = string.Empty;
+
        
-
-      
-
-
-
+        public virtual ICollection<Categoria>? Categoria { get; set; }
+       
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using FarmaciaPerformanceGo.Model;
+﻿using FarmaciaPerformanceGo.Data;
+using FarmaciaPerformanceGo.Model;
 using FarmaciaPerformanceGo.Service;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,7 @@ public class ProdutoService : IProdutoService
 
     public async Task<IEnumerable<Produto>> GetAll()
     {
-        return await _context.Produtos
+        return await _context.Produto
             .ToListAsync();
     }
 
@@ -21,8 +22,8 @@ public class ProdutoService : IProdutoService
     {
         try
         {
-            var Produto = await _context.Produtos
-                        .FirstAsync(i => i.Id == id);
+            var Produto = await _context.Produto
+                        .FirstAsync(p => p.Id == id);
             return Produto;
         }
         catch
@@ -33,14 +34,14 @@ public class ProdutoService : IProdutoService
 
     public async Task<IEnumerable<Produto>> GetByNome(string nome)
     {
-        return await _context.Produtos
+        return await _context.Produto
             .Where(p => p.Nome.Contains(nome))
             .ToListAsync();
     }
 
     public async Task<Produto?> Create(Produto produto)
     {
-        await _context.Produtos.AddAsync(produto);
+        await _context.AddAsync(produto);
         await _context.SaveChangesAsync();
 
         return produto;
@@ -48,7 +49,7 @@ public class ProdutoService : IProdutoService
 
     public async Task<Produto?> Update(Produto produto)
     {
-        var ProdutoUpdate = await _context.Produtos.FindAsync(produto.Id);
+        var ProdutoUpdate = await _context.Produto.FindAsync(produto.Id);
 
         if (ProdutoUpdate is null)
         {

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FarmaciaPerformanceGo.Controllers
 {
 
-    [Authorize]
+
     [Route("~/produtos")]
     [ApiController]
     public class ProdutoController : ControllerBase
@@ -24,7 +24,7 @@ namespace FarmaciaPerformanceGo.Controllers
             _produtoValidator = produtoValidator;
         }
 
-        [AllowAnonymous]
+     
         [HttpGet]
 
         public async Task<ActionResult> GetAll()
@@ -57,7 +57,6 @@ namespace FarmaciaPerformanceGo.Controllers
         public async Task<ActionResult> Create([FromBody] Produto produtos)
         {
             var validarprodutos = await _produtoValidator.ValidateAsync(produtos);
-
             if (!validarprodutos.IsValid)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, validarprodutos);
@@ -65,7 +64,7 @@ namespace FarmaciaPerformanceGo.Controllers
             var Resposta = await _produtoService.Create(produtos);
 
             if (Resposta is null)
-                return BadRequest("Produto não foi criado.");
+                return BadRequest("Produto não encontrado");
 
             return CreatedAtAction(nameof(GetbyId), new { id = produtos.Id }, produtos);
 

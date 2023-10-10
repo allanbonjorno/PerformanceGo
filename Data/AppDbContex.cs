@@ -1,18 +1,30 @@
 ﻿using FarmaciaPerformanceGo.Model;
 using Microsoft.EntityFrameworkCore;
 
-public class AppDbContext : DbContext
+namespace FarmaciaPerformanceGo.Data
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public class AppDbContext : DbContext
     {
-        modelBuilder.Entity<Produto>().ToTable("tb_produtos");
-   
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Produto>().ToTable("tb_produtos");
+            modelBuilder.Entity<Categoria>().ToTable("tb_categorias");
+
+            modelBuilder.Entity<Produto>()
+                        .HasOne(c => c.Categoria)
+                        .WithMany(p => p.Produto)
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+        }
+
+        public DbSet<Produto> Produto { get; set; } = null!;
+        public DbSet<Categoria> Categoria { get; set; } = null!;
 
     }
-    public DbSet<Produto> Produtos { get; set; } = null!;
-
-
 }

@@ -11,7 +11,7 @@ namespace FarmaciaPerformanceGo.Service
 
         Task<Produto?> Create(Produto produto);
 
-        Task<Produto?> Update(Produto produtos);
+        Task<Produto?> Update(Produto produto);
 
         Task Delete(Produto produto);
 
